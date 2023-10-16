@@ -1,0 +1,23 @@
+{
+  "name": "lab-tronic-cfm-drivers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dbg_start": "node --inspect-brk main.js",
+    "test": "jest",
+    "dbg_test": "node --inspect-brk ./node_modules/.bin/jest ./test/serial_driver.test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "keypress": "^0.2.1",
+    "papaparse": "^5.4.1",
+    "serialport": "^12.0.0"
+  }
+}
