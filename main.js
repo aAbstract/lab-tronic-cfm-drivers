@@ -2,7 +2,7 @@ const serial_adapter = require('./serial_adapter');
 const keyboard = require('./keyboard');
 const csv = require('./csv');
 
-const SP_NAME = '/dev/ttyACM0';
+const SP_NAME = '/dev/ttyUSB0';
 const BAUD_RATE = 115200;
 
 let data_cache = [];

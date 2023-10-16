@@ -13,7 +13,7 @@ function send_reset_scale() {
     if (sp === null)
         return { err: `Serial Port [${sp_name}] is not Connected` };
     const packet = Buffer.from([0x87, 0x87, 0x0B, 0xFF, 0xFF, 0xCF, 0x00, 0xA9, 0xD9, 0x0D, 0x0A]);
-    console.log(`Writing: ${packet}`);
+    console.log(`Writing: ${new Uint8Array(packet)}`);
     sp.write(packet);
     return { ok: 'OK' };
 }
