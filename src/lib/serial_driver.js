@@ -78,7 +78,7 @@ const MsgTypesConfig = {
     },
     12: {
         name: 'WRITE_PISTON_PUMP',
-        data_type: DataTypes.INT,
+        data_type: DataTypes.UINT,
         data_length: 4,
     },
     13: {
