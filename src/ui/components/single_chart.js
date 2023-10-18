@@ -43,7 +43,11 @@ function render() {
         /** @type {import('../../lib/serial_driver').DeviceMsg} */
         const device_msg = args.device_msg;
         const { msg_type, seq_number, msg_value } = device_msg;
-        points_data[msg_type].x.push(seq_number);
+        if (points_data[msg_type].x.length >= 240) {
+            points_data[msg_type].x.shift();
+            points_data[msg_type].y.shift();
+        }
+        points_data[msg_type].x.push(String(seq_number));
         points_data[msg_type].y.push(msg_value);
 
         single_chart_comp.setData([{
@@ -51,6 +55,8 @@ function render() {
             y: points_data[selected_param].y,
         }]);
     });
+
+    ui_core.add_ui_event('change_plot_param', 'change_plot_param_func', args => { selected_param = args.msg_type; });
 }
 
 module.exports = { render };

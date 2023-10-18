@@ -91,6 +91,38 @@ const top_level_cmds = {
 
         ui_core.trigger_ui_event(CMD_EVENT_MAP[data_source], { file_name });
     },
+    'PLOT': (/** @type {string[]} */ cmd_parts) => {
+        const plot_param = cmd_parts[1];
+        if (!plot_param) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: 'No Plot Parameter was Given',
+                },
+            });
+            return;
+        }
+
+        const PARAM_MSG_TYPE_MAP = {
+            'TEMP': MsgTypes.READ_TEMPERATURE,
+            'WGHT': MsgTypes.READ_WEIGHT,
+            'PRES': MsgTypes.READ_PRESSURE,
+        };
+
+        if (!(Object.keys(PARAM_MSG_TYPE_MAP)).includes(plot_param)) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: `Unknown Plot Param: ${plot_param}`,
+                },
+            });
+            return;
+        }
+
+        ui_core.trigger_ui_event('change_plot_param', { msg_type: PARAM_MSG_TYPE_MAP[plot_param] });
+    },
     'EXIT': (_) => { process.exit(0); },
 };
 
@@ -144,6 +176,7 @@ function render() {
             },
         });
         exec_cmd(data.toUpperCase());
+        cmd_prompt_comp.focus();
     });
 
     ui_core.add_ui_event('device_disconnected', 'device_disconnected_func', _ => {
