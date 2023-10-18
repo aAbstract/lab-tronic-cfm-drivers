@@ -16,33 +16,41 @@ const points_data = {
     [MsgTypes.READ_WEIGHT]: {
         x: [],
         y: [],
-        color: 'yellow',
+        color: 'green',
     },
     [MsgTypes.READ_TEMPERATURE]: {
         x: [],
         y: [],
-        color: 'yellow',
+        color: 'red',
     },
     [MsgTypes.READ_PRESSURE]: {
         x: [],
         y: [],
-        color: 'yellow',
+        color: 'blue',
     },
 };
+
+let selected_param = MsgTypes.READ_WEIGHT;
 
 function render() {
     /** @type {blessed_contrib.Widgets.LineElement} */
     const single_chart_comp = ui_core.main_grid.set(0, 0, 5, 3, blessed_contrib.line, {
         label: 'SINGLE_CHART',
-        style: {
-            line: 'yellow',
-        },
+        style: { line: points_data[selected_param].color },
     });
 
-    single_chart_comp.setData([{
-        x: [0, 1, 2, 3, 5, 6, 7],
-        y: [5, 1, 7, 5, 7, 7, 7],
-    }]);
+    ui_core.add_ui_event('device_msg', 'device_msg_single_chart_handler', args => {
+        /** @type {import('../../lib/serial_driver').DeviceMsg} */
+        const device_msg = args.device_msg;
+        const { msg_type, seq_number, msg_value } = device_msg;
+        points_data[msg_type].x.push(seq_number);
+        points_data[msg_type].y.push(msg_value);
+
+        single_chart_comp.setData([{
+            x: points_data[selected_param].x,
+            y: points_data[selected_param].y,
+        }]);
+    });
 }
 
 module.exports = { render };
