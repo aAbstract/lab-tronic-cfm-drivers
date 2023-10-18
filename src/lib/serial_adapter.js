@@ -1,6 +1,7 @@
 const { SerialPort, DelimiterParser } = require('serialport');
 const { decode_packet, encode_packet } = require('./serial_driver');
 const ui_core = require('./ui_core');
+const { save_csv } = require('./csv');
 
 const MODULE_ID = 'lib.serial_adapter';
 const PROTOCOL_VERSION = 0x87;
@@ -147,6 +148,18 @@ function init_serial_adapter(sp_name, baud_rate) {
             },
         });
         ui_core.trigger_ui_event('device_connected', {});
+    });
+
+    ui_core.add_ui_event('write_data', 'write_data_func', (args) => {
+        const { file_name } = args;
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'INFO',
+                msg: 'Writing Device Data',
+            },
+        });
+        save_csv(data_cache, file_name);
     });
 }
 

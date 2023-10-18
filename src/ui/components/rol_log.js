@@ -9,6 +9,7 @@
 const blessed_contrib = require('blessed-contrib');
 const ui_core = require('../../lib/ui_core');
 const moment = require('moment');
+const { save_csv } = require('../../lib/csv');
 
 const FG_RED = '\x1b[31m';
 const FG_GREEN = '\x1b[32m';
@@ -43,6 +44,18 @@ function render() {
             else
                 rol_log_comp.log(`[${log_msg.datetime}] [${log_level_tag}] | ${log_msg.msg}`);
         }
+    });
+
+    ui_core.add_ui_event('write_log', 'write_log_func', (args) => {
+        const { file_name } = args;
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'INFO',
+                msg: 'Writing System Logs',
+            },
+        });
+        save_csv(log_cache, file_name);
     });
 }
 

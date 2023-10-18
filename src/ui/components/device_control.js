@@ -9,6 +9,17 @@ const top_level_cmds = {
     },
     'SET': (/** @type {string[]} */ cmd_parts) => {
         const set_target = cmd_parts[1];
+        if (!set_target) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: 'No Set Target was Given',
+                },
+            });
+            return;
+        }
+
         const CMD_TARGETS = {
             'PISP': MsgTypes.WRITE_PISTON_PUMP,
             'PERP': MsgTypes.WRITE_PERISTALTIC_PUMP,
@@ -37,6 +48,48 @@ const top_level_cmds = {
         }
 
         send_command(CMD_TARGETS[set_target], set_value);
+    },
+    'WRITE': (/** @type {string[]} */ cmd_parts) => {
+        const data_source = cmd_parts[1];
+        if (!data_source) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: 'No Data Source was Given',
+                },
+            });
+            return;
+        }
+
+        const CMD_EVENT_MAP = {
+            'DATA': 'write_data',
+            'LOG': 'write_log',
+        };
+        if (!(Object.keys(CMD_EVENT_MAP)).includes(data_source)) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: `Unknown Data Source: ${data_source}`,
+                },
+            });
+            return;
+        }
+
+        const file_name = cmd_parts[2];
+        if (!file_name) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: 'No File Name was Given',
+                },
+            });
+            return;
+        }
+
+        ui_core.trigger_ui_event(CMD_EVENT_MAP[data_source], { file_name });
     },
     'EXIT': (_) => { process.exit(0); },
 };
