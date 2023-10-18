@@ -1,5 +1,34 @@
 const blessed_contrib = require('blessed-contrib');
 const ui_core = require('../../lib/ui_core');
+const { MsgTypes } = require('../../lib/serial_driver');
+
+const points_data = {
+    [MsgTypes.READ_PISTON_PUMP]: {
+        x: [],
+        y: [],
+        color: 'yellow',
+    },
+    [MsgTypes.READ_PERISTALTIC_PUMP]: {
+        x: [],
+        y: [],
+        color: 'magenta',
+    },
+    [MsgTypes.READ_WEIGHT]: {
+        x: [],
+        y: [],
+        color: 'yellow',
+    },
+    [MsgTypes.READ_TEMPERATURE]: {
+        x: [],
+        y: [],
+        color: 'yellow',
+    },
+    [MsgTypes.READ_PRESSURE]: {
+        x: [],
+        y: [],
+        color: 'yellow',
+    },
+};
 
 function render() {
     /** @type {blessed_contrib.Widgets.LineElement} */
