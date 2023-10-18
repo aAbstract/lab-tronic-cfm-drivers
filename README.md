@@ -17,6 +17,10 @@ SET set_target_name value: Change Device Control Parameter
 set_target_name = { PISP:PISTON_PUMP, PERP:PERISTALTIC_PUMP }
 Example: SET PIST 50
 
+PLOT param: Send Parameter to Single Chart Widget
+param = { TEMP, WGHT, PRES }
+Example: PLOT WGHT
+
 WRITE data_source file_name
 data_source = { LOG, DATA }
 Example: WRITE DATA exp1_data.csv
