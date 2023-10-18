@@ -132,6 +132,7 @@ function render() {
         mouse: true,
         inputOnFocus: true,
     });
+    cmd_prompt_comp.focus();
 
     cmd_prompt_comp.on('submit', (/** @type {String} */ data) => {
         cmd_prompt_comp.clearValue();

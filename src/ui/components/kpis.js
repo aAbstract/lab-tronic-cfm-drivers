@@ -64,23 +64,36 @@ function render() {
         MsgTypesCompMap = {
             [MsgTypes.READ_PISTON_PUMP]: {
                 comp: pis_pump_kpi_comp,
-                unit: 'm/s',
+                unit: 'RPM',
+                data_view: (/** @type {number} */ msg_value) => { return msg_value.toFixed(); },
             },
             [MsgTypes.READ_PERISTALTIC_PUMP]: {
                 comp: per_pump_kpi_comp,
-                unit: 'm/s',
+                unit: '',
+                data_view: (/** @type {number} */ msg_value) => {
+                    const msg_value_map = {
+                        0: 'STOP',
+                        1: 'LOW',
+                        2: 'MEDIUM',
+                        3: 'HIGH',
+                    };
+                    return msg_value_map[msg_value];
+                },
             },
             [MsgTypes.READ_WEIGHT]: {
                 comp: weight_kpi_comp,
-                unit: 'Kg',
+                unit: 'g',
+                data_view: (/** @type {number} */ msg_value) => { return msg_value.toFixed(2); },
             },
             [MsgTypes.READ_TEMPERATURE]: {
                 comp: temp_kpi_comp,
                 unit: 'C',
+                data_view: (/** @type {number} */ msg_value) => { return msg_value.toFixed(2); },
             },
             [MsgTypes.READ_PRESSURE]: {
                 comp: pres_kpi_comp,
-                unit: 'mmHg',
+                unit: 'Bar',
+                data_view: (/** @type {number} */ msg_value) => { return msg_value.toFixed(2); },
             },
         };
     }
@@ -92,7 +105,9 @@ function render() {
         const kpi_comp = MsgTypesCompMap[device_msg.msg_type].comp;
         /** @type {string} */
         const kpi_unit = MsgTypesCompMap[device_msg.msg_type].unit;
-        kpi_comp.setContent(`${device_msg.msg_value.toFixed(3)} ${kpi_unit}`);
+        const data_view = MsgTypesCompMap[device_msg.msg_type].data_view;
+        // kpi_comp.setContent(`${device_msg.msg_value.toFixed(3)} ${kpi_unit}`);
+        kpi_comp.setContent(`${data_view(device_msg.msg_value)} ${kpi_unit}`);
     });
 }
 
