@@ -56,7 +56,10 @@ function render() {
         }]);
     });
 
-    ui_core.add_ui_event('change_plot_param', 'change_plot_param_func', args => { selected_param = args.msg_type; });
+    ui_core.add_ui_event('change_plot_param', 'change_plot_param_func', args => {
+        selected_param = args.msg_type;
+        single_chart_comp.style.line = points_data[selected_param].color;
+    });
 }
 
 module.exports = { render };
