@@ -108,3 +108,45 @@ keyboard.init_keyboard({
             console.log(result.err);
     },
 });
+
+
+const func_id = `${MODULE_ID}.init_serial_adapter`;
+ui_core.trigger_ui_event('add_sys_log', {
+    log_msg: {
+        module_id: func_id,
+        level: 'INFO',
+        msg: `Connecting to Port: ${sp_name}, Baud Rate: ${baud_rate}`,
+    },
+});
+
+sp = new SerialPort({
+    path: sp_name,
+    baudRate: baud_rate,
+});
+sp_name = sp_name;
+const parser = new DelimiterParser({ delimiter: Buffer.from([0x0D, 0x0A]), includeDelimiter: true });
+sp.pipe(parser);
+
+ui_core.trigger_ui_event('add_sys_log', {
+    log_msg: {
+        module_id: func_id,
+        level: 'INFO',
+        msg: 'Connected to Device Serial Port',
+    },
+});
+ui_core.trigger_ui_event('add_sys_log', {
+    log_msg: {
+        module_id: func_id,
+        level: 'ERROR',
+        msg: `Could not Connect to Port: ${sp_name}, Baud Rate: ${baud_rate}`,
+    },
+});
+
+function send_reset_scale() {
+    if (sp === null)
+        return { err: `Serial Port [${sp_name}] is not Connected` };
+    const packet = Buffer.from([0x87, 0x87, 0x0B, 0x00, 0x00, 0xCF, 0x00, 0x88, 0xDA, 0x0D, 0x0A]);
+    console.log(`Writing: ${new Uint8Array(packet)}`);
+    sp.write(packet);
+    return { ok: 'OK' };
+}

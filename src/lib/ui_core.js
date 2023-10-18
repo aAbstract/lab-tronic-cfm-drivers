@@ -37,6 +37,7 @@ function trigger_ui_event(event_type, args) {
     Object.keys(ui_events[event_type]).forEach((/** @type {String} */ key) => {
         ui_events[event_type][key](args);
     });
+    screen.render();
 }
 
 module.exports = { screen, main_grid, add_ui_event, rm_ui_event, trigger_ui_event };
