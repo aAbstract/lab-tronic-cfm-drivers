@@ -1,4 +1,4 @@
-const serial_driver = require('../serial_driver');
+const serial_driver = require('../src/lib/serial_driver');
 
 // <test_utils>
 function cmp_buffers(buffer_1, buffer_2) {
@@ -83,8 +83,8 @@ test('test serianl_driver.encode_packet', () => {
     expect(cmp_buffers(target_packet, result.ok)).toBe(true);
 
     // encode command packet case
-    target_packet = new Uint8Array([0x87, 0x87, 0x0C, 0xFF, 0xFF, 0xCF, 0x00, 0x00, 0xBB, 0xD4, 0x0D, 0x0A]);
-    result = serial_driver.encode_packet(135, 0xFFFF, serial_driver.MsgTypes.WRITE_RESET_SCALE, 0);
+    target_packet = new Uint8Array([0x87, 0x87, 0x0C, 0xFF, 0xFF, 0xCF, 0x00, 0xFF, 0xC3, 0xDB, 0x0D, 0x0A]);
+    result = serial_driver.encode_packet(135, 0xFFFF, serial_driver.MsgTypes.WRITE_RESET_SCALE, 0xFF);
     expect(result.ok).toBeDefined();
     expect(cmp_buffers(target_packet, result.ok)).toBe(true);
 });

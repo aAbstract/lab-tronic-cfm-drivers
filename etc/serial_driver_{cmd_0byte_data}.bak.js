@@ -89,7 +89,7 @@ const MsgTypesConfig = {
     15: {
         name: 'WRITE_RESET_SCALE',
         data_type: DataTypes.COMMAND,
-        data_length: 1,
+        data_length: 0,
     },
 };
 
@@ -129,10 +129,10 @@ const CRC16_POLYNOMIAL = new Uint16Array([
 ]);
 
 const PARSERS_MAP = {
+    0: {},
     1: {
         [DataTypes.INT]: Int8Array,
         [DataTypes.UINT]: Uint8Array,
-        [DataTypes.COMMAND]: Uint8Array,
     },
     2: {
         [DataTypes.INT]: Int16Array,
@@ -223,7 +223,7 @@ function gen_cfg1(data_type, data_length, msg_type) {
     // data length bits
     if (!(Object.keys(PARSERS_MAP).includes(data_length.toString())))
         return { err: 'Invalid Data Length Bits' };
-    const data_length_bits = Math.log2(data_length).toString(2).padStart(2, '0');
+    const data_length_bits = Math.log2(data_length === 0 ? 1 : data_length).toString(2).padStart(2, '0');
 
     // msg type bits
     if (!(Object.values(MsgTypes).includes(msg_type)))
@@ -336,7 +336,8 @@ function decode_packet(packet) {
     // data_length
     const data_length_bits = cfg1_bits.slice(2, 4);
     const data_length = 2 ** parseInt(data_length_bits, 2);
-    if (data_length !== (packet.length - PACKET_MIN_LENGTH))
+    if ((data_type !== DataTypes.COMMAND && data_length !== (packet.length - PACKET_MIN_LENGTH)) ||
+        (data_type === DataTypes.COMMAND && data_length !== PACKET_MIN_LENGTH))
         return {
             err: {
                 msg: 'Invalid Data Length Bits',
@@ -397,12 +398,15 @@ function encode_packet(protocol_version, seq_number, msg_type, msg_value) {
         return result;
     const cfg_seg = new Uint8Array([result.ok, parseInt(cfg2, 2)]);
 
-    result = gen_data_payload(data_type, data_length, msg_value);
-    if (result.err)
-        return result;
-    const data_payload = result.ok;
+    let seg_1 = concat_uint8_arrays([start_seg, seq_number_seg, cfg_seg]);
+    if (data_type !== DataTypes.COMMAND) {
+        result = gen_data_payload(data_type, data_length, msg_value);
+        if (result.err)
+            return result;
+        const data_payload = result.ok;
+        seg_1 = concat_uint8_arrays([start_seg, seq_number_seg, cfg_seg, data_payload]);
+    }
 
-    const seg_1 = concat_uint8_arrays([start_seg, seq_number_seg, cfg_seg, data_payload]);
     // compute crc16
     const crc16 = compute_crc16(seg_1);
     result = u16_to_2u8(crc16);
