@@ -26,7 +26,7 @@ const ALLOWED_LEVELS = ['INFO', 'DEBUGx', 'ERROR'];
 const log_cache = [];
 
 function render() {
-    const rol_log_comp = ui_core.main_grid.set(7, 0, 2, 5, blessed_contrib.log, {
+    const rol_log_comp = ui_core.main_grid.set(10, 0, 10, 11, blessed_contrib.log, {
         fg: 'white',
         label: 'SYSTEM_LOGS',
     });

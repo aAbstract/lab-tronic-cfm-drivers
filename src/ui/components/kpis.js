@@ -2,43 +2,62 @@ const blessed = require('blessed');
 const ui_core = require('../../lib/ui_core');
 const { MsgTypes } = require('../../lib/serial_driver');
 
+const START_ROW = 8;
+const KPI_WIDTH = 4;
+const KPI_HEIGHT = 2;
 let MsgTypesCompMap = null;
 
 function render() {
-    const temp_kpi_comp = ui_core.main_grid.set(5, 0, 2, 1, blessed.box, {
+    const temp_kpi_comp = ui_core.main_grid.set(START_ROW, 0, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
         label: 'TEMPERATURE',
+        mouse: true,
         content: '-- --',
         style: {
             fg: 'red',
             bold: true,
+            hover: {
+                bg: 'red',
+                fg: 'white',
+            },
         },
         align: 'center',
         valign: 'middle',
     });
 
-    const weight_kpi_comp = ui_core.main_grid.set(5, 1, 2, 1, blessed.box, {
+    const weight_kpi_comp = ui_core.main_grid.set(START_ROW, 1 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
         label: 'WEIGHT',
+        mouse: true,
         content: '-- --',
         style: {
             fg: 'green',
             bold: true,
+            hover: {
+                bg: 'green',
+                fg: 'white',
+            },
         },
         align: 'center',
         valign: 'middle',
     });
 
-    const pres_kpi_comp = ui_core.main_grid.set(5, 2, 2, 1, blessed.box, {
+    /** @type {blessed.Widgets.BoxElement} */
+    const pres_kpi_comp = ui_core.main_grid.set(START_ROW, 2 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
         label: 'PRESSURE',
+        mouse: true,
         content: '-- --',
         style: {
             fg: 'blue',
             bold: true,
+            hover: {
+                bg: 'blue',
+                fg: 'white',
+            },
         },
         align: 'center',
         valign: 'middle',
     });
 
-    const pis_pump_kpi_comp = ui_core.main_grid.set(5, 3, 2, 1, blessed.box, {
+    const pis_pump_kpi_comp = ui_core.main_grid.set(START_ROW, 3 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.box, {
         label: 'PISTON_PUMP',
         content: '-- --',
         style: {
@@ -49,7 +68,7 @@ function render() {
         valign: 'middle',
     });
 
-    const per_pump_kpi_comp = ui_core.main_grid.set(5, 4, 2, 1, blessed.box, {
+    const per_pump_kpi_comp = ui_core.main_grid.set(START_ROW, 4 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.box, {
         label: 'PERISTALTIC_PUMP',
         content: '-- --',
         style: {
@@ -97,6 +116,40 @@ function render() {
             },
         };
     }
+
+    // event handlers
+    temp_kpi_comp.on('press', () => {
+        temp_kpi_comp.style.bg = 'red';
+        temp_kpi_comp.style.fg = 'white';
+
+        pres_kpi_comp.style.bg = '';
+        pres_kpi_comp.style.fg = 'blue';
+        weight_kpi_comp.style.bg = '';
+        weight_kpi_comp.style.fg = 'green';
+        ui_core.trigger_ui_event('change_plot_param', { msg_type: MsgTypes.READ_TEMPERATURE });
+    });
+
+    weight_kpi_comp.on('press', () => {
+        weight_kpi_comp.style.bg = 'green';
+        weight_kpi_comp.style.fg = 'white';
+
+        temp_kpi_comp.style.bg = '';
+        temp_kpi_comp.style.fg = 'red';
+        pres_kpi_comp.style.bg = '';
+        pres_kpi_comp.style.fg = 'blue';
+        ui_core.trigger_ui_event('change_plot_param', { msg_type: MsgTypes.READ_WEIGHT });
+    });
+
+    pres_kpi_comp.on('press', () => {
+        pres_kpi_comp.style.bg = 'blue';
+        pres_kpi_comp.style.fg = 'white';
+
+        weight_kpi_comp.style.bg = '';
+        weight_kpi_comp.style.fg = 'green';
+        temp_kpi_comp.style.bg = '';
+        temp_kpi_comp.style.fg = 'red';
+        ui_core.trigger_ui_event('change_plot_param', { msg_type: MsgTypes.READ_PRESSURE });
+    });
 
     ui_core.add_ui_event('device_msg', 'device_msg_kpi_handler', args => {
         /** @type {import('../../lib/serial_driver').DeviceMsg} */

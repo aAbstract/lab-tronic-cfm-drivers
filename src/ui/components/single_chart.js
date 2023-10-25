@@ -2,6 +2,12 @@ const blessed_contrib = require('blessed-contrib');
 const ui_core = require('../../lib/ui_core');
 const { MsgTypes } = require('../../lib/serial_driver');
 
+const MSG_TYPES_LABLES = {
+    [MsgTypes.READ_TEMPERATURE]: 'TEMPERATURE',
+    [MsgTypes.READ_WEIGHT]: 'WEIGHT',
+    [MsgTypes.READ_PRESSURE]: 'PRESSURE',
+};
+
 const points_data = {
     [MsgTypes.READ_PISTON_PUMP]: {
         x: [],
@@ -29,13 +35,12 @@ const points_data = {
         color: 'blue',
     },
 };
-
 let selected_param = MsgTypes.READ_WEIGHT;
 
 function render() {
     /** @type {blessed_contrib.Widgets.LineElement} */
-    const single_chart_comp = ui_core.main_grid.set(0, 0, 5, 3, blessed_contrib.line, {
-        label: 'SINGLE_CHART',
+    const single_chart_comp = ui_core.main_grid.set(0, 0, 8, 10, blessed_contrib.line, {
+        label: MSG_TYPES_LABLES[selected_param],
         style: { line: points_data[selected_param].color },
     });
 
@@ -59,6 +64,15 @@ function render() {
     ui_core.add_ui_event('change_plot_param', 'change_plot_param_func', args => {
         selected_param = args.msg_type;
         single_chart_comp.style.line = points_data[selected_param].color;
+        single_chart_comp.setLabel(MSG_TYPES_LABLES[selected_param]);
+
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'INFO',
+                msg: `Switched Single Plot to ${MSG_TYPES_LABLES[selected_param]} Channel`,
+            },
+        });
     });
 }
 

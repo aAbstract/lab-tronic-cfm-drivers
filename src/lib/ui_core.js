@@ -4,7 +4,7 @@ const blessed_contrib = require('blessed-contrib');
 const screen = blessed.screen();
 const ui_events = {};
 // create vertical stack layout
-const main_grid = new blessed_contrib.grid({ rows: 10, cols: 5, screen: screen });
+const main_grid = new blessed_contrib.grid({ rows: 20, cols: 20, screen: screen });
 
 /**
  * @param {string} event_type 

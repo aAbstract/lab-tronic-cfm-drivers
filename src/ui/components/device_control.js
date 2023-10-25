@@ -3,6 +3,13 @@ const ui_core = require('../../lib/ui_core');
 const { MsgTypes } = require('../../lib/serial_driver');
 const { send_command } = require('../../lib/serial_adapter');
 
+const START_ROW = 10;
+const START_COL = 11;
+const F_HEIGHT = 2;
+const F_WIDTH = 9;
+
+let control_var = null;
+
 const top_level_cmds = {
     'RESET': (_) => {
         send_command(MsgTypes.WRITE_RESET_SCALE, 0xFF);
@@ -146,9 +153,10 @@ function exec_cmd(cmd) {
 }
 
 function render() {
+    // ui layout
     /** @type {blessed.Widgets.BoxElement} */
-    const dc_comp = ui_core.main_grid.set(9, 0, 1, 1, blessed.box, {
-        content: 'CONNECTING...',
+    const device_state_comp = ui_core.main_grid.set(START_ROW, START_COL, F_HEIGHT, F_WIDTH, blessed.box, {
+        content: 'DEVICE: CONNECTING...',
         style: {
             fg: 'yellow',
             bold: true,
@@ -157,36 +165,174 @@ function render() {
         valign: 'middle',
     });
 
+    /** @type {blessed.Widgets.ButtonElement} */
+    const control_pist_btn = ui_core.main_grid.set(START_ROW + F_HEIGHT, START_COL, F_HEIGHT, F_WIDTH / 3, blessed.button, {
+        content: 'CONTROL PISTON PUMP',
+        mouse: true,
+        style: {
+            fg: 'yellow',
+            bold: true,
+            hover: {
+                bg: 'yellow',
+                fg: 'white',
+            },
+        },
+        align: 'center',
+        valign: 'middle',
+    });
+
+    /** @type {blessed.Widgets.ButtonElement} */
+    const control_perp_btn = ui_core.main_grid.set(START_ROW + F_HEIGHT, START_COL + (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.button, {
+        content: 'CONTROL PERISTALTIC PUMP',
+        mouse: true,
+        style: {
+            fg: 'magenta',
+            bold: true,
+            hover: {
+                bg: 'magenta',
+                fg: 'white',
+            },
+        },
+        align: 'center',
+        valign: 'middle',
+    });
+
+    /** @type {blessed.Widgets.ButtonElement} */
+    const reset_scale_btn = ui_core.main_grid.set(START_ROW + F_HEIGHT, START_COL + 2 * (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.button, {
+        content: 'RESET SCALE',
+        mouse: true,
+        style: {
+            fg: 'green',
+            bold: true,
+            hover: {
+                bg: 'green',
+                fg: 'white',
+            },
+        },
+        align: 'center',
+        valign: 'middle',
+    });
+
     /** @type {blessed.Widgets.TextboxElement} */
-    const cmd_prompt_comp = ui_core.main_grid.set(9, 1, 1, 4, blessed.textbox, {
+    const cmd_prompt_comp = ui_core.main_grid.set(START_ROW + 2 * F_HEIGHT, START_COL, F_HEIGHT, F_WIDTH, blessed.textbox, {
         label: 'COMMAND_PROMPT',
         keys: true,
         mouse: true,
         inputOnFocus: true,
     });
-    cmd_prompt_comp.focus();
 
+    /** @type {blessed.Widgets.ButtonElement} */
+    const exit_btn = ui_core.main_grid.set(START_ROW + 3 * F_HEIGHT, START_COL + (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.button, {
+        content: 'EXIT',
+        mouse: true,
+        style: {
+            fg: 'red',
+            bold: true,
+            hover: {
+                bg: 'red',
+                fg: 'white',
+            },
+        },
+        align: 'center',
+        valign: 'middle',
+    });
+
+    // event handlers
     cmd_prompt_comp.on('submit', (/** @type {String} */ data) => {
         cmd_prompt_comp.clearValue();
+        if (control_var) {
+            if (control_var === 'PISP') {
+                const control_val = Number(data);
+                if (isNaN(control_val)) {
+                    ui_core.trigger_ui_event('add_sys_log', {
+                        log_msg: {
+                            module_id: '',
+                            level: 'ERROR',
+                            msg: `Invalid Control Value: ${data}, RPM Should be a Positive Integer`,
+                        },
+                    });
+                    return;
+                }
+                const cmd = `SET ${control_var} ${control_val}`;
+                exec_cmd(cmd);
+            }
+            else if (control_var === 'PERP') {
+                const control_val = Number(data);
+                if (isNaN(control_val) || !([0, 1, 2, 3].includes(control_val))) {
+                    ui_core.trigger_ui_event('add_sys_log', {
+                        log_msg: {
+                            module_id: '',
+                            level: 'ERROR',
+                            msg: `Invalid Control Value: ${data}, Choose One From (0,1,2,3)`,
+                        },
+                    });
+                    return;
+                }
+                const cmd = `SET ${control_var} ${control_val}`;
+                exec_cmd(cmd);
+            } else {
+                ui_core.trigger_ui_event('add_sys_log', {
+                    log_msg: {
+                        module_id: '',
+                        level: 'ERROR',
+                        msg: `Invalid Control Variable: ${control_var}`,
+                    },
+                });
+                return;
+            }
+        } else {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'INFO',
+                    msg: `Executing: ${data}`,
+                },
+            });
+            exec_cmd(data.toUpperCase());
+        }
+        control_var = null;
+        cmd_prompt_comp.setLabel('COMMAND_PROMPT');
+        ui_core.screen.render();
+    });
+
+    exit_btn.on('press', () => { exec_cmd('EXIT'); });
+
+    control_pist_btn.on('press', () => {
+        cmd_prompt_comp.clearValue();
+        cmd_prompt_comp.setLabel('Enter Piston Pump RPM: ');
+        control_var = 'PISP';
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
                 module_id: '',
                 level: 'INFO',
-                msg: `Executing: ${data}`,
+                msg: 'Control Variable Set to PISTON_PUMP',
             },
         });
-        exec_cmd(data.toUpperCase());
-        cmd_prompt_comp.focus();
     });
 
+    control_perp_btn.on('press', () => {
+        cmd_prompt_comp.clearValue();
+        cmd_prompt_comp.setLabel('Enter Peristaltic Pump Speed (0->STOP,1->LOW,2->MEDIUM,3->HIGH): ');
+        control_var = 'PERP';
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'INFO',
+                msg: 'Control Variable Set to PERISTALTIC_PUMP',
+            },
+        });
+    });
+
+    reset_scale_btn.on('press', () => { exec_cmd('RESET'); });
+
     ui_core.add_ui_event('device_disconnected', 'device_disconnected_func', _ => {
-        dc_comp.setContent('DISCONNECTED');
-        dc_comp.style.fg = 'red';
+        device_state_comp.setContent('DEVICE: DISCONNECTED');
+        device_state_comp.style.fg = 'red';
     });
 
     ui_core.add_ui_event('device_connected', 'device_disconnected_func', _ => {
-        dc_comp.setContent('CONNECTED');
-        dc_comp.style.fg = 'green';
+        device_state_comp.setContent('DEVICE: CONNECTED');
+        device_state_comp.style.fg = 'green';
     });
 }
 

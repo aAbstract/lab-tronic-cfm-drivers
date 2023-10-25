@@ -150,3 +150,27 @@ function send_reset_scale() {
     sp.write(packet);
     return { ok: 'OK' };
 }
+
+// [MsgTypes.READ_PISTON_PUMP]: {
+//     x: [],
+//     y: [],
+//     color: 'yellow',
+// },
+// [MsgTypes.READ_PERISTALTIC_PUMP]: {
+//     x: [],
+//     y: [],
+//     color: 'magenta',
+// },
+
+overlay_chart_comp.setData([
+    {
+        style: { line: 'red' },
+        x: [0, 1, 2, 3, 4, 5],
+        y: [2, 1, 4, 5, 5, 5],
+    },
+    {
+        style: { line: 'green' },
+        x: [0, 1, 2, 3, 4, 5],
+        y: [4, 2, 8, 9, 9],
+    },
+]);
