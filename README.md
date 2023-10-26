@@ -13,6 +13,10 @@ npm run start
 ```
 RESET: Calibrate Device Scale (Set to 0)
 
+CONNECT port_name: Connect to Device Over Port port_name
+Example: CONNECT /dev/ttyACM0
+Example: CONNECT COM3
+
 SET set_target_name value: Change Device Control Parameter
 set_target_name = { PISP:PISTON_PUMP, PERP:PERISTALTIC_PUMP }
 Example: SET PIST 50
@@ -27,4 +31,18 @@ Example: WRITE DATA exp1_data.csv
 Example: WRITE LOG exp1_log.csv
 
 EXIT: Exit the tool
+
+CMD_ALIASES = {
+    'RS': 'RESET',
+    'SI': 'SET PISP',
+    'SE': 'SET PERP',
+    'WD': 'WRITE DATA',
+    'WL': 'WRITE LOG',
+    'PT': 'PLOT TEMP',
+    'PW': 'PLOT WGHT',
+    'PP': 'PLOT PRES',
+    'CN': 'CONNECT',
+    'DC': 'DISCONNECT',
+    'EX': 'EXIT',
+}
 ```

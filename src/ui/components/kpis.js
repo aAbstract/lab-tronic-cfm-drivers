@@ -10,7 +10,7 @@ let MsgTypesCompMap = null;
 function render() {
     /** @type {blessed.Widgets.ButtonElement} */
     const temp_kpi_comp = ui_core.main_grid.set(START_ROW, 0, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
-        label: 'TEMPERATURE',
+        label: 'TEMPERATURE [PT]',
         mouse: true,
         content: '-- --',
         style: {
@@ -27,7 +27,7 @@ function render() {
 
     /** @type {blessed.Widgets.ButtonElement} */
     const weight_kpi_comp = ui_core.main_grid.set(START_ROW, 1 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
-        label: 'WEIGHT',
+        label: 'WEIGHT [PW]',
         mouse: true,
         content: '-- --',
         style: {
@@ -44,7 +44,7 @@ function render() {
 
     /** @type {blessed.Widgets.ButtonElement} */
     const pres_kpi_comp = ui_core.main_grid.set(START_ROW, 2 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
-        label: 'PRESSURE',
+        label: 'PRESSURE [PP]',
         mouse: true,
         content: '-- --',
         style: {

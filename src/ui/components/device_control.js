@@ -138,6 +138,7 @@ const top_level_cmds = {
         }
         ui_core.trigger_ui_event('serial_port_connect', { port_name: port_name.replace('/DEV/TTY', '/dev/tty') });
     },
+    'DISCONNECT': (_) => { ui_core.trigger_ui_event('serial_port_disconnect', {}); },
     'EXIT': (_) => { process.exit(0); },
 };
 
@@ -145,7 +146,34 @@ const top_level_cmds = {
  * @param {string} cmd 
  */
 function exec_cmd(cmd) {
-    const cmd_parts = cmd.split(' ');
+    const CMD_ALIASES = {
+        'RS': 'RESET',
+        'SI': 'SET PISP',
+        'SE': 'SET PERP',
+        'WD': 'WRITE DATA',
+        'WL': 'WRITE LOG',
+        'PT': 'PLOT TEMP',
+        'PW': 'PLOT WGHT',
+        'PP': 'PLOT PRES',
+        'CN': 'CONNECT',
+        'DC': 'DISCONNECT',
+        'EX': 'EXIT',
+    };
+
+    const first_part = cmd.split(' ')[0];
+    let parsed_cmd = cmd;
+    if (Object.keys(CMD_ALIASES).includes(first_part))
+        parsed_cmd = cmd.replace(first_part, CMD_ALIASES[first_part]);
+
+    ui_core.trigger_ui_event('add_sys_log', {
+        log_msg: {
+            module_id: '',
+            level: 'INFO',
+            msg: `Executing: ${parsed_cmd}`,
+        },
+    });
+
+    cmd_parts = parsed_cmd.split(' ');
     const top_level_cmd = cmd_parts[0];
     if (!(Object.keys(top_level_cmds).includes(top_level_cmd))) {
         ui_core.trigger_ui_event('add_sys_log', {
@@ -175,7 +203,7 @@ function render() {
 
     /** @type {blessed.Widgets.ButtonElement} */
     const control_pist_btn = ui_core.main_grid.set(START_ROW + F_HEIGHT, START_COL, F_HEIGHT, F_WIDTH / 3, blessed.button, {
-        content: 'CONTROL PISTON PUMP',
+        content: 'PISTON PUMP [SI]',
         mouse: true,
         style: {
             fg: 'yellow',
@@ -191,7 +219,7 @@ function render() {
 
     /** @type {blessed.Widgets.ButtonElement} */
     const control_perp_btn = ui_core.main_grid.set(START_ROW + F_HEIGHT, START_COL + (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.button, {
-        content: 'CONTROL PERISTALTIC PUMP',
+        content: 'PERISTALTIC PUMP [SE]',
         mouse: true,
         style: {
             fg: 'magenta',
@@ -207,7 +235,7 @@ function render() {
 
     /** @type {blessed.Widgets.ButtonElement} */
     const reset_scale_btn = ui_core.main_grid.set(START_ROW + F_HEIGHT, START_COL + 2 * (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.button, {
-        content: 'RESET SCALE',
+        content: 'RESET SCALE [RS]',
         mouse: true,
         style: {
             fg: 'green',
@@ -231,7 +259,7 @@ function render() {
 
     /** @type {blessed.Widgets.ButtonElement} */
     const exit_btn = ui_core.main_grid.set(START_ROW + 3 * F_HEIGHT, START_COL + (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.button, {
-        content: 'EXIT',
+        content: 'EXIT [EX]',
         mouse: true,
         style: {
             fg: 'red',
@@ -289,13 +317,6 @@ function render() {
                 return;
             }
         } else {
-            ui_core.trigger_ui_event('add_sys_log', {
-                log_msg: {
-                    module_id: '',
-                    level: 'INFO',
-                    msg: `Executing: ${data}`,
-                },
-            });
             exec_cmd(data.toUpperCase());
             cmd_prompt_comp.focus();
         }
@@ -335,12 +356,12 @@ function render() {
     reset_scale_btn.on('press', () => { exec_cmd('RESET'); });
 
     ui_core.add_ui_event('device_disconnected', 'device_disconnected_func', _ => {
-        device_state_comp.setContent('DEVICE: DISCONNECTED');
+        device_state_comp.setContent('DEVICE: DISCONNECTED [CN, DC]');
         device_state_comp.style.fg = 'red';
     });
 
     ui_core.add_ui_event('device_connected', 'device_disconnected_func', _ => {
-        device_state_comp.setContent('DEVICE: CONNECTED');
+        device_state_comp.setContent('DEVICE: CONNECTED [CN, DC]');
         device_state_comp.style.fg = 'green';
     });
 

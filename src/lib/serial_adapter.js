@@ -23,7 +23,7 @@ function send_command(msg_type, args) {
             log_msg: {
                 module_id: '',
                 level: 'ERROR',
-                msg: `Serial Port [${sp_name}] is not Connected`,
+                msg: 'Serial Port is not Connected',
             },
         });
         return;
@@ -147,6 +147,12 @@ function connect_to_serial_port(sp_name, baud_rate) {
     });
 }
 
+function disconnect_from_serial_port() {
+    sp.close();
+    sp = null;
+    ui_core.trigger_ui_event('device_disconnected', {});
+}
+
 /**
  * @param {number} baud_rate
  * @param {Function} on_packet
@@ -167,12 +173,13 @@ function init_serial_adapter(baud_rate) {
             return;
         }
 
+        ui_core.add_ui_event('serial_port_connect', 'serial_port_connect_func', args => connect_to_serial_port(args.port_name, baud_rate));
+        ui_core.add_ui_event('serial_port_disconnect', 'serial_port_connect_func', _ => disconnect_from_serial_port());
+
         if (devices_ports.length === 1) {
             connect_to_serial_port(devices_ports[0].path, baud_rate);
             return;
         }
-
-        ui_core.add_ui_event('serial_port_connect', 'serial_port_connect_func', args => connect_to_serial_port(args.port_name, baud_rate));
 
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
