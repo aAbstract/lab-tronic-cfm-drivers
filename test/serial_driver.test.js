@@ -40,11 +40,11 @@ test('test serial_driver.decode_packet', () => {
     expect(result.err.msg).toBe('Invalid Data Length Bits');
 
     // invalid msg type case
-    packet = new Uint8Array([0x87, 0x87, 0x0F, 0x00, 0x00, 0x2E, 0x00, 0x89, 0x41, 0x10, 0x40, 0xF2, 0x2E, 0x0D, 0x0A]);
+    packet = new Uint8Array([0x87, 0x87, 0x0F, 0x00, 0x00, 0x2A, 0x00, 0x89, 0x41, 0x10, 0x40, 0x5E, 0x3E, 0x0D, 0x0A]);
     result = serial_driver.decode_packet(packet);
     expect(result.err.msg).toBe('Invalid Msg Type Bits');
 
-    // valid case
+    // valid case [READ_WEIGHT]
     packet = new Uint8Array([0x87, 0x87, 0x0F, 0x00, 0x00, 0xA2, 0x00, 0x89, 0x41, 0x10, 0x40, 0xA4, 0x1A, 0x0D, 0x0A]);
     result = serial_driver.decode_packet(packet);
     expect(result.ok).toBeDefined();
@@ -61,11 +61,30 @@ test('test serial_driver.decode_packet', () => {
         msg_type_str: 'READ_WEIGHT',
         cfg2: '00000000',
         b64_msg_buffer: 'iUEQQA==',
-        msg_value: 2.254
+        msg_value: 2.254,
+    });
+
+    // valid case [DEVICE_ERROR]
+    packet = new Uint8Array([0x87, 0x87, 0x0C, 0x00, 0x00, 0x4E, 0x00, 0xF0, 0x8C, 0x45, 0x0D, 0x0A]);
+    result = serial_driver.decode_packet(packet);
+    expect(result.ok).toBeDefined();
+    device_msg = result.ok;
+    expect(device_msg).toEqual({
+        protocol_version: 135,
+        packet_length: 12,
+        seq_number: 0,
+        data_type: 1,
+        data_type_str: 'UINT',
+        data_length: 1,
+        msg_type: 14,
+        msg_type_str: 'READ_DEVICE_ERROR',
+        cfg2: '00000000',
+        b64_msg_buffer: '8A==',
+        msg_value: 240,
     });
 });
 
-test('test serianl_driver.encode_packet', () => {
+test('test serial_driver.encode_packet', () => {
     // invalid seq number case
     let result = serial_driver.encode_packet(135, 70000, serial_driver.MsgTypes.READ_WEIGHT, 2.254);
     expect(result.err).toBe('Number Is not Valid u16');
@@ -73,7 +92,7 @@ test('test serianl_driver.encode_packet', () => {
     expect(result.err).toBe('Number Is not Valid u16');
 
     // invalid msg type case
-    result = serial_driver.encode_packet(135, 0, 14, 2.254);
+    result = serial_driver.encode_packet(135, 0, 10, 2.254);
     expect(result.err).toBe('Msg Type Has no Configuration');
 
     // encode data packet case
@@ -83,8 +102,9 @@ test('test serianl_driver.encode_packet', () => {
     expect(cmp_buffers(target_packet, result.ok)).toBe(true);
 
     // encode command packet case
-    target_packet = new Uint8Array([0x87, 0x87, 0x0C, 0xFF, 0xFF, 0xCF, 0x00, 0xFF, 0xC3, 0xDB, 0x0D, 0x0A]);
-    result = serial_driver.encode_packet(135, 0xFFFF, serial_driver.MsgTypes.WRITE_RESET_SCALE, 0xFF);
+    target_packet = new Uint8Array([0x87, 0x87, 0x0C, 0x00, 0x00, 0xCF, 0x00, 0xFF, 0x4B, 0xEB, 0x0D, 0x0A]);
+    result = serial_driver.encode_packet(135, 0, serial_driver.MsgTypes.WRITE_RESET_SCALE, 0xFF);
+    debugger;
     expect(result.ok).toBeDefined();
     expect(cmp_buffers(target_packet, result.ok)).toBe(true);
 });

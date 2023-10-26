@@ -14,6 +14,7 @@ npm run start
 ## User Guide
 ```
 RESET: Calibrate Device Scale (Set to 0)
+RECOVER: Recover From Device Error
 
 CONNECT port_name: Connect to Device Over Port port_name
 Example: CONNECT /dev/ttyACM0
@@ -45,6 +46,7 @@ CMD_ALIASES = {
     'PP': 'PLOT PRES',
     'CN': 'CONNECT',
     'DC': 'DISCONNECT',
+    'RV': 'RECOVER',
     'EX': 'EXIT',
 }
 ```

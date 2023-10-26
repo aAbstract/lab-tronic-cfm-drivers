@@ -1,7 +1,7 @@
 const blessed = require('blessed');
 const ui_core = require('../../lib/ui_core');
 const { MsgTypes } = require('../../lib/serial_driver');
-const { send_command } = require('../../lib/serial_adapter');
+const { send_command, DEVICE_ERRORS } = require('../../lib/serial_adapter');
 
 const START_ROW = 10;
 const START_COL = 11;
@@ -9,6 +9,10 @@ const F_HEIGHT = 2;
 const F_WIDTH = 9;
 
 let control_var = null;
+let alarm = false;
+setInterval(() => {
+    if (alarm) { process.stderr.write('\x07') }
+}, 1000);
 
 const top_level_cmds = {
     'RESET': (_) => {
@@ -170,7 +174,8 @@ const top_level_cmds = {
         }
         ui_core.trigger_ui_event('serial_port_connect', { port_name: port_name.replace('/DEV/TTY', '/dev/tty') });
     },
-    'DISCONNECT': (_) => { ui_core.trigger_ui_event('serial_port_disconnect', {}); },
+    'DISCONNECT': (_) => { ui_core.trigger_ui_event('serial_port_disconnect', {}) },
+    'RECOVER': () => { ui_core.trigger_ui_event('device_error_recover', {}) },
     'EXIT': (_) => { process.exit(0); },
 };
 
@@ -189,6 +194,7 @@ function exec_cmd(cmd) {
         'PP': 'PLOT PRES',
         'CN': 'CONNECT',
         'DC': 'DISCONNECT',
+        'RV': 'RECOVER',
         'EX': 'EXIT',
     };
 
@@ -223,8 +229,19 @@ function exec_cmd(cmd) {
 function render() {
     // ui layout
     /** @type {blessed.Widgets.BoxElement} */
-    const device_state_comp = ui_core.main_grid.set(START_ROW, START_COL, F_HEIGHT, F_WIDTH, blessed.box, {
+    const device_state_comp = ui_core.main_grid.set(START_ROW, START_COL, F_HEIGHT, 2 * (F_WIDTH / 3), blessed.box, {
         content: 'DEVICE: CONNECTING...',
+        style: {
+            fg: 'yellow',
+            bold: true,
+        },
+        align: 'center',
+        valign: 'middle',
+    });
+
+    /** @type {blessed.Widgets.BoxElement} */
+    const device_health_comp = ui_core.main_grid.set(START_ROW, START_COL + 2 * (F_WIDTH / 3), F_HEIGHT, F_WIDTH / 3, blessed.box, {
+        content: '--',
         style: {
             fg: 'yellow',
             bold: true,
@@ -390,11 +407,37 @@ function render() {
     ui_core.add_ui_event('device_disconnected', 'device_disconnected_func', _ => {
         device_state_comp.setContent('DEVICE: DISCONNECTED [CN, DC]');
         device_state_comp.style.fg = 'red';
+        device_health_comp.setContent('--');
+        device_health_comp.style.fg = 'yellow';
     });
 
     ui_core.add_ui_event('device_connected', 'device_disconnected_func', args => {
-        device_state_comp.setContent(`DEVICE-${args.sp_name}: CONNECTED [CN, DC]`);
+        device_state_comp.setContent(`DEVICE-${args.sp_name} CONNECTED [CN, DC]`);
         device_state_comp.style.fg = 'green';
+        device_health_comp.setContent('HEALTHY');
+        device_health_comp.style.fg = 'green';
+    });
+
+    ui_core.add_ui_event('device_error', 'device_error_func', args => {
+        /** @type {import('../../lib/serial_driver').DeviceMsg} */
+        const device_msg = args.device_msg;
+        const device_err_hex = device_msg.msg_value.toString(16).toUpperCase().padStart(2, '0');
+        device_health_comp.setContent(`DEVICE_ERROR: ${device_err_hex} [RV]`);
+        device_health_comp.style.fg = 'red';
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'ERROR',
+                msg: `DEVICE_ERROR=${device_err_hex}, Msg="${DEVICE_ERRORS[device_msg.msg_value]}"`,
+            },
+        });
+        alarm = true;
+    });
+
+    ui_core.add_ui_event('device_error_recover', 'device_error_recover_func', _ => {
+        device_health_comp.setContent('HEALTHY');
+        device_health_comp.style.fg = 'green';
+        alarm = false;
     });
 
     cmd_prompt_comp.focus();

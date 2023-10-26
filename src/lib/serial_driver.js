@@ -48,6 +48,7 @@ const MsgTypes = {
     READ_PRESSURE: 4,
     WRITE_PISTON_PUMP: 12,
     WRITE_PERISTALTIC_PUMP: 13,
+    READ_DEVICE_ERROR: 14,
     WRITE_RESET_SCALE: 15,
 };
 const MsgTypesConfig = {
@@ -83,6 +84,11 @@ const MsgTypesConfig = {
     },
     13: {
         name: 'WRITE_PERISTALTIC_PUMP',
+        data_type: DataTypes.UINT,
+        data_length: 1,
+    },
+    14: {
+        name: 'READ_DEVICE_ERROR',
         data_type: DataTypes.UINT,
         data_length: 1,
     },

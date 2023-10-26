@@ -1,10 +1,18 @@
 const { SerialPort, DelimiterParser } = require('serialport');
-const { decode_packet, encode_packet } = require('./serial_driver');
+const { decode_packet, encode_packet, MsgTypes } = require('./serial_driver');
 const ui_core = require('./ui_core');
 const { save_csv } = require('./csv');
 
 const MODULE_ID = 'lib.serial_adapter';
 const PROTOCOL_VERSION = 0x87;
+const DEVICE_ERRORS = {
+    0xF0: 'Low Liquid in the tank',
+    0xF1: 'Stepper Motor Failed',
+    0xF2: 'Pressure Sensor Failed',
+    0xF3: 'Weight Meter Failed',
+    0xF4: 'Invalid Packet',
+    0xF5: 'Peristaltic Pump Failed',
+};
 
 /** @type {string} */
 /** @type {SerialPort} */
@@ -93,7 +101,10 @@ function on_serial_data_handler(data) {
                 }),
             },
         });
-        ui_core.trigger_ui_event('device_msg', { device_msg });
+        if (device_msg.msg_type === MsgTypes.READ_DEVICE_ERROR)
+            ui_core.trigger_ui_event('device_error', { device_msg });
+        else
+            ui_core.trigger_ui_event('device_msg', { device_msg });
         data_cache.push(device_msg);
     }
 }
@@ -240,4 +251,4 @@ function init_serial_adapter(baud_rate) {
     });
 }
 
-module.exports = { init_serial_adapter, send_command };
+module.exports = { init_serial_adapter, send_command, DEVICE_ERRORS };
