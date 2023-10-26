@@ -143,14 +143,35 @@ function connect_to_serial_port(sp_name, baud_rate) {
                 msg: 'Connected to Device Serial Port',
             },
         });
-        ui_core.trigger_ui_event('device_connected', {});
+        ui_core.trigger_ui_event('device_connected', { sp_name });
+    });
+
+    sp.on('close', () => {
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'ERROR',
+                msg: 'Device Disconnected',
+            },
+        });
+        disconnect_from_serial_port();
     });
 }
 
 function disconnect_from_serial_port() {
-    sp.close();
-    sp = null;
-    ui_core.trigger_ui_event('device_disconnected', {});
+    if (sp) {
+        if (!sp.closed) { sp.close(() => { }); }
+        sp = null;
+        ui_core.trigger_ui_event('device_disconnected', {});
+    } else {
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'ERROR',
+                msg: 'No Connected Device',
+            },
+        });
+    }
 }
 
 /**
@@ -158,6 +179,9 @@ function disconnect_from_serial_port() {
  * @param {Function} on_packet
  */
 function init_serial_adapter(baud_rate) {
+    ui_core.add_ui_event('serial_port_connect', 'connect_to_serial_port', args => connect_to_serial_port(args.port_name, baud_rate));
+    ui_core.add_ui_event('serial_port_disconnect', 'disconnect_from_serial_port', _ => disconnect_from_serial_port());
+
     SerialPort.list().then(ports => {
         const devices_ports = ports.filter(x => (x.path.includes('COM') || x.path.includes('ttyUSB') || x.path.includes('ttyACM')));
 
@@ -172,9 +196,6 @@ function init_serial_adapter(baud_rate) {
             ui_core.trigger_ui_event('device_disconnected', {});
             return;
         }
-
-        ui_core.add_ui_event('serial_port_connect', 'serial_port_connect_func', args => connect_to_serial_port(args.port_name, baud_rate));
-        ui_core.add_ui_event('serial_port_disconnect', 'serial_port_connect_func', _ => disconnect_from_serial_port());
 
         if (devices_ports.length === 1) {
             connect_to_serial_port(devices_ports[0].path, baud_rate);

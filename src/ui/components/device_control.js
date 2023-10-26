@@ -392,8 +392,8 @@ function render() {
         device_state_comp.style.fg = 'red';
     });
 
-    ui_core.add_ui_event('device_connected', 'device_disconnected_func', _ => {
-        device_state_comp.setContent('DEVICE: CONNECTED [CN, DC]');
+    ui_core.add_ui_event('device_connected', 'device_disconnected_func', args => {
+        device_state_comp.setContent(`DEVICE-${args.sp_name}: CONNECTED [CN, DC]`);
         device_state_comp.style.fg = 'green';
     });
 
