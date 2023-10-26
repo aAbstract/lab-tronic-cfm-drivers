@@ -9,7 +9,7 @@ const ui_core = require('./ui_core');
  */
 function save_csv(data, file_name) {
     const csv_str = papaparse.unparse(data);
-    const file_path = path.join('etc', file_name.toLowerCase());
+    const file_path = path.join('etc', file_name.toLowerCase() + '.csv');
     fs.writeFile(file_path, csv_str, () => {
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {

@@ -10,6 +10,7 @@ const F_WIDTH = 9;
 
 let control_var = null;
 let alarm = false;
+let last_sp_name = null;
 setInterval(() => {
     if (alarm) { process.stderr.write('\x07') }
 }, 1000);
@@ -172,10 +173,12 @@ const top_level_cmds = {
             });
             return;
         }
-        ui_core.trigger_ui_event('serial_port_connect', { port_name: port_name.replace('/DEV/TTY', '/dev/tty') });
+        last_sp_name = port_name.replace('/DEV/TTY', '/dev/tty');
+        ui_core.trigger_ui_event('serial_port_connect', { port_name: last_sp_name });
     },
     'DISCONNECT': (_) => { ui_core.trigger_ui_event('serial_port_disconnect', {}) },
     'RECOVER': () => { ui_core.trigger_ui_event('device_error_recover', {}) },
+    'ALARM': () => { alarm = false },
     'EXIT': (_) => { process.exit(0); },
 };
 
@@ -195,6 +198,7 @@ function exec_cmd(cmd) {
         'CN': 'CONNECT',
         'DC': 'DISCONNECT',
         'RV': 'RECOVER',
+        'AL': 'ALARM',
         'EX': 'EXIT',
     };
 
@@ -435,10 +439,26 @@ function render() {
     });
 
     ui_core.add_ui_event('device_error_recover', 'device_error_recover_func', _ => {
-        device_health_comp.setContent('HEALTHY');
-        device_health_comp.style.fg = 'green';
+        device_health_comp.setContent('--');
+        device_health_comp.style.fg = 'yellow';
         alarm = false;
+
+        if (!last_sp_name) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: 'Could not Get Last Port Name, Reconnect Using CN port_name',
+                },
+            });
+            return;
+        }
+
+        ui_core.trigger_ui_event('serial_port_disconnect', {});
+        ui_core.trigger_ui_event('serial_port_connect', { port_name: last_sp_name });
     });
+
+    ui_core.add_ui_event('set_last_port_name', 'set_last_port_name_func', args => { last_sp_name = args.port_name });
 
     cmd_prompt_comp.focus();
 }

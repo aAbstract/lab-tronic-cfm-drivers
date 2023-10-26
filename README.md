@@ -14,7 +14,8 @@ npm run start
 ## User Guide
 ```
 RESET: Calibrate Device Scale (Set to 0)
-RECOVER: Recover From Device Error
+RECOVER: Stop Alarm and Reconnect to Device
+ALARM: Stop Alarm
 
 CONNECT port_name: Connect to Device Over Port port_name
 Example: CONNECT /dev/ttyACM0
@@ -30,8 +31,8 @@ Example: PLOT WGHT
 
 WRITE data_source file_name
 data_source = { LOG, DATA }
-Example: WRITE DATA exp1_data.csv
-Example: WRITE LOG exp1_log.csv
+Example: WRITE DATA exp1_data
+Example: WRITE LOG exp1_log
 
 EXIT: Exit the tool
 
@@ -47,6 +48,7 @@ CMD_ALIASES = {
     'CN': 'CONNECT',
     'DC': 'DISCONNECT',
     'RV': 'RECOVER',
+    'AL': 'ALARM',
     'EX': 'EXIT',
 }
 ```

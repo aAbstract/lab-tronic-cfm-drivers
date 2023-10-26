@@ -1,0 +1,210 @@
+module_id,level,msg,datetime
+,INFO,"Connecting to Port: /dev/ttyACM0, Baud Rate: 115200",2023-10-26T16:52:07
+,INFO,Connected to Device Serial Port,2023-10-26T16:52:07
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,96,0,10,0,0,0,29,150,13,10",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,0,0,65,0,1,77,233,13,10",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,162,0,27,121,22,63,209,82,13,10",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.588""}",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,163,0,108,120,115,191,167,158,13,10",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.951""}",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,164,0,27,121,22,191,35,206,13,10",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.588""}",2023-10-26T16:52:10
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,96,0,10,0,0,0,162,23,13,10",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,1,0,65,0,1,9,226,13,10",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,162,0,38,43,21,63,32,8,13,10",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.583""}",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,163,0,241,247,114,191,171,37,13,10",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.949""}",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,164,0,126,197,23,191,22,142,13,10",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.593""}",2023-10-26T16:52:11
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,96,0,10,0,0,0,114,157,13,10",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,2,0,65,0,1,197,255,13,10",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,162,0,202,219,19,63,170,121,13,10",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.578""}",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,163,0,1,117,114,191,4,97,13,10",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.947""}",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,164,0,88,16,25,191,173,236,13,10",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.598""}",2023-10-26T16:52:12
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,96,0,10,0,0,0,205,28,13,10",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,3,0,65,0,1,129,244,13,10",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,162,0,199,138,18,63,125,179,13,10",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.572""}",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,163,0,158,239,113,191,230,108,13,10",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.945""}",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,164,0,166,89,26,191,123,4,13,10",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.603""}",2023-10-26T16:52:13
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,0,0,78,0,240,140,69,13,10",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_DEVICE_ERROR"",""msg_value"":""240.000""}",2023-10-26T16:52:14
+,ERROR,"DEVICE_ERROR=F0, Msg=""Low Liquid in the tank""",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,96,0,10,0,0,0,124,1,13,10",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,5,0,65,0,1,25,207,13,10",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,162,0,126,56,17,63,161,35,13,10",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.567""}",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,163,0,201,103,113,191,78,57,13,10",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.943""}",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,164,0,100,161,27,191,75,72,13,10",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.608""}",2023-10-26T16:52:14
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,96,0,10,0,0,0,172,139,13,10",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,6,0,65,0,1,213,210,13,10",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,162,0,189,228,15,63,72,146,13,10",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.562""}",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,163,0,164,221,112,191,21,65,13,10",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.941""}",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,164,0,118,231,28,191,235,165,13,10",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.613""}",2023-10-26T16:52:15
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,96,0,10,0,0,0,19,10,13,10",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,7,0,65,0,1,145,217,13,10",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,162,0,83,143,14,63,12,60,13,10",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.557""}",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,163,0,205,80,112,191,190,83,13,10",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.939""}",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,164,0,37,44,30,191,3,196,13,10",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.618""}",2023-10-26T16:52:16
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,8,0,96,0,10,0,0,0,161,187,13,10",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,8,0,65,0,1,109,179,13,10",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,8,0,162,0,173,56,13,63,248,120,13,10",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.552""}",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,8,0,163,0,183,193,111,191,27,161,13,10",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.937""}",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,8,0,164,0,8,111,31,191,167,129,13,10",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.623""}",2023-10-26T16:52:17
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,9,0,96,0,10,0,0,0,30,58,13,10",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,9,0,65,0,1,41,184,13,10",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,9,0,162,0,100,224,11,63,224,38,13,10",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.546""}",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,9,0,163,0,51,48,111,191,206,169,13,10",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.934""}",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,9,0,164,0,130,176,32,191,122,1,13,10",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.628""}",2023-10-26T16:52:18
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,0,0,78,0,240,140,69,13,10",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_DEVICE_ERROR"",""msg_value"":""240.000""}",2023-10-26T16:52:19
+,ERROR,"DEVICE_ERROR=F0, Msg=""Low Liquid in the tank""",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,11,0,96,0,10,0,0,0,113,49,13,10",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,11,0,65,0,1,161,174,13,10",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,11,0,162,0,29,135,10,63,57,30,13,10",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.541""}",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,11,0,163,0,69,156,110,191,210,0,13,10",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.932""}",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,11,0,164,0,247,239,33,191,251,238,13,10",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.633""}",2023-10-26T16:52:19
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,12,0,96,0,10,0,0,0,127,173,13,10",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,12,0,65,0,1,125,158,13,10",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,12,0,162,0,206,43,9,63,158,223,13,10",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.536""}",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,12,0,163,0,190,5,110,191,133,62,13,10",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.930""}",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,12,0,164,0,95,46,35,191,230,86,13,10",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.637""}",2023-10-26T16:52:20
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,13,0,96,0,10,0,0,0,192,44,13,10",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,13,0,65,0,1,57,149,13,10",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,13,0,162,0,27,207,7,63,222,56,13,10",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.531""}",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,13,0,163,0,207,108,109,191,255,74,13,10",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.927""}",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,13,0,164,0,31,107,36,191,45,179,13,10",2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.642""}",2023-10-26T16:52:21
+,INFO,Executing: RECOVER,2023-10-26T16:52:21
+,INFO,"Connecting to Port: /dev/ttyACM0, Baud Rate: 115200",2023-10-26T16:52:21
+,WARN,Device Disconnected,2023-10-26T16:52:21
+,INFO,Connected to Device Serial Port,2023-10-26T16:52:21
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,96,0,10,0,0,0,29,150,13,10",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,0,0,65,0,1,77,233,13,10",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,162,0,27,121,22,63,209,82,13,10",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.588""}",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,163,0,108,120,115,191,167,158,13,10",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.951""}",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,0,0,164,0,27,121,22,191,35,206,13,10",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.588""}",2023-10-26T16:52:24
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,96,0,10,0,0,0,162,23,13,10",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,1,0,65,0,1,9,226,13,10",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,162,0,38,43,21,63,32,8,13,10",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.583""}",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,163,0,241,247,114,191,171,37,13,10",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.949""}",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,1,0,164,0,126,197,23,191,22,142,13,10",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.593""}",2023-10-26T16:52:25
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,96,0,10,0,0,0,114,157,13,10",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,2,0,65,0,1,197,255,13,10",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,162,0,202,219,19,63,170,121,13,10",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.578""}",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,163,0,1,117,114,191,4,97,13,10",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.947""}",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,2,0,164,0,88,16,25,191,173,236,13,10",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.598""}",2023-10-26T16:52:26
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,96,0,10,0,0,0,205,28,13,10",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,3,0,65,0,1,129,244,13,10",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,162,0,199,138,18,63,125,179,13,10",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.572""}",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,163,0,158,239,113,191,230,108,13,10",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.945""}",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,3,0,164,0,166,89,26,191,123,4,13,10",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.603""}",2023-10-26T16:52:27
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,0,0,78,0,240,140,69,13,10",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_DEVICE_ERROR"",""msg_value"":""240.000""}",2023-10-26T16:52:28
+,ERROR,"DEVICE_ERROR=F0, Msg=""Low Liquid in the tank""",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,96,0,10,0,0,0,124,1,13,10",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,5,0,65,0,1,25,207,13,10",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,162,0,126,56,17,63,161,35,13,10",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.567""}",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,163,0,201,103,113,191,78,57,13,10",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.943""}",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,5,0,164,0,100,161,27,191,75,72,13,10",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.608""}",2023-10-26T16:52:28
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,96,0,10,0,0,0,172,139,13,10",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,6,0,65,0,1,213,210,13,10",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,162,0,189,228,15,63,72,146,13,10",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.562""}",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,163,0,164,221,112,191,21,65,13,10",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.941""}",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,6,0,164,0,118,231,28,191,235,165,13,10",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.613""}",2023-10-26T16:52:29
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,96,0,10,0,0,0,19,10,13,10",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PISTON_PUMP"",""msg_value"":""10.000""}",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 12, packet: 135,135,12,7,0,65,0,1,145,217,13,10",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PERISTALTIC_PUMP"",""msg_value"":""1.000""}",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,162,0,83,143,14,63,12,60,13,10",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_WEIGHT"",""msg_value"":""0.557""}",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,163,0,205,80,112,191,190,83,13,10",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_TEMPERATURE"",""msg_value"":""-0.939""}",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"echo length: 15, packet: 135,135,15,7,0,164,0,37,44,30,191,3,196,13,10",2023-10-26T16:52:30
+lib.serial_adapter.on_serial_data_handler,DEBUG,"{""msg_type"":""READ_PRESSURE"",""msg_value"":""-0.618""}",2023-10-26T16:52:30
+,INFO,Executing: DISCONNECT,2023-10-26T16:52:31
+,WARN,Device Disconnected,2023-10-26T16:52:31
+,INFO,Executing: WRITE LOG SAMPLE_LOG,2023-10-26T16:52:35
+,INFO,Writing System Logs,2023-10-26T16:52:35

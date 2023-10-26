@@ -19,8 +19,9 @@ const LEVEL_COLOR_MAP = {
     'INFO': FG_GREEN,
     'DEBUG': FG_YELLOW,
     'ERROR': FG_RED,
+    'WARN': FG_YELLOW,
 };
-const ALLOWED_LEVELS = ['INFO', 'DEBUGx', 'ERROR'];
+const ALLOWED_LEVELS = ['INFO', 'DEBUGx', 'ERROR', 'WARN'];
 
 /** @type {LogMsg[]} */
 const log_cache = [];

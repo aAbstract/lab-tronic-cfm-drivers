@@ -17,6 +17,8 @@ const DEVICE_ERRORS = {
 /** @type {string} */
 /** @type {SerialPort} */
 let sp = null;
+/** @type {DelimiterParser} */
+let sp_stream_parser = null;
 /** @type {import('./serial_driver').DeviceMsg[]} */
 let data_cache = [];
 let seq_number = 0;
@@ -101,6 +103,7 @@ function on_serial_data_handler(data) {
                 }),
             },
         });
+
         if (device_msg.msg_type === MsgTypes.READ_DEVICE_ERROR)
             ui_core.trigger_ui_event('device_error', { device_msg });
         else
@@ -121,6 +124,23 @@ function connect_to_serial_port(sp_name, baud_rate) {
             msg: `Connecting to Port: ${sp_name}, Baud Rate: ${baud_rate}`,
         },
     });
+
+    if (sp) {
+        sp.open(err => {
+            if (!err)
+                return;
+
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: `Could not Connect to Device Serial Port, ${err.message}`,
+                },
+            });
+            ui_core.trigger_ui_event('device_disconnected', {});
+        });
+        return;
+    }
 
     sp = new SerialPort({
         path: sp_name,
@@ -143,9 +163,11 @@ function connect_to_serial_port(sp_name, baud_rate) {
     });
 
     sp.on('open', () => {
-        const parser = new DelimiterParser({ delimiter: Buffer.from([0x0D, 0x0A]), includeDelimiter: true });
-        sp.pipe(parser);
-        parser.on('data', on_serial_data_handler);
+        if (!sp_stream_parser) {
+            sp_stream_parser = new DelimiterParser({ delimiter: Buffer.from([0x0D, 0x0A]), includeDelimiter: true });
+            sp.pipe(sp_stream_parser);
+            sp_stream_parser.on('data', on_serial_data_handler);
+        }
 
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
@@ -161,7 +183,7 @@ function connect_to_serial_port(sp_name, baud_rate) {
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
                 module_id: '',
-                level: 'ERROR',
+                level: 'WARN',
                 msg: 'Device Disconnected',
             },
         });
@@ -171,8 +193,7 @@ function connect_to_serial_port(sp_name, baud_rate) {
 
 function disconnect_from_serial_port() {
     if (sp) {
-        if (!sp.closed) { sp.close(() => { }); }
-        sp = null;
+        if (sp.isOpen) { sp.close(() => { }) }
         ui_core.trigger_ui_event('device_disconnected', {});
     } else {
         ui_core.trigger_ui_event('add_sys_log', {
@@ -210,6 +231,7 @@ function init_serial_adapter(baud_rate) {
 
         if (devices_ports.length === 1) {
             connect_to_serial_port(devices_ports[0].path, baud_rate);
+            ui_core.trigger_ui_event('set_last_port_name', { port_name: devices_ports[0].path });
             return;
         }
 

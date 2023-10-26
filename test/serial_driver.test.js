@@ -104,7 +104,6 @@ test('test serial_driver.encode_packet', () => {
     // encode command packet case
     target_packet = new Uint8Array([0x87, 0x87, 0x0C, 0x00, 0x00, 0xCF, 0x00, 0xFF, 0x4B, 0xEB, 0x0D, 0x0A]);
     result = serial_driver.encode_packet(135, 0, serial_driver.MsgTypes.WRITE_RESET_SCALE, 0xFF);
-    debugger;
     expect(result.ok).toBeDefined();
     expect(cmp_buffers(target_packet, result.ok)).toBe(true);
 });
