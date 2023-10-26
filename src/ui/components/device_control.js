@@ -42,8 +42,7 @@ const top_level_cmds = {
             return;
         }
 
-        const set_value = cmd_parts[2];
-        if (!set_value) {
+        if (!cmd_parts[2]) {
             ui_core.trigger_ui_event('add_sys_log', {
                 log_msg: {
                     module_id: '',
@@ -52,6 +51,39 @@ const top_level_cmds = {
                 },
             });
             return;
+        }
+
+        let set_value = Number(cmd_parts[2]);
+        if (isNaN(set_value)) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: `Invalid Control Value: ${cmd_parts[2]}`,
+                },
+            });
+            return;
+        }
+
+        if (set_target === 'PISP' && set_value > 200) {
+            set_value = 200;
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'INFO',
+                    msg: `Adjusted Control Value to: ${set_value}`,
+                },
+            });
+        }
+        else if (set_target === 'PERP' && set_value > 3) {
+            set_value = 3;
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'INFO',
+                    msg: `Adjusted Control Value to: ${set_value}`,
+                },
+            });
         }
 
         send_command(CMD_TARGETS[set_target], set_value);
