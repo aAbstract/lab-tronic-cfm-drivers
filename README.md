@@ -4,6 +4,8 @@
 - LabTronic Cross Flow Membrane Filtration Trainer Device Protocol, Drivers and Basic Data Processing Tools.
 
 ## How to Run
+1. Install node from https://nodejs.org/
+2. Run the following commands
 ```
 npm install
 npm run start
@@ -46,3 +48,8 @@ CMD_ALIASES = {
     'EX': 'EXIT',
 }
 ```
+
+## Miscellaneous
+### Scripts
+- linux run script: <b>run.bash</b>
+- windows run script: <b>run.bat</b>
