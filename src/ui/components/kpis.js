@@ -8,6 +8,7 @@ const KPI_HEIGHT = 2;
 let MsgTypesCompMap = null;
 
 function render() {
+    /** @type {blessed.Widgets.ButtonElement} */
     const temp_kpi_comp = ui_core.main_grid.set(START_ROW, 0, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
         label: 'TEMPERATURE',
         mouse: true,
@@ -24,6 +25,7 @@ function render() {
         valign: 'middle',
     });
 
+    /** @type {blessed.Widgets.ButtonElement} */
     const weight_kpi_comp = ui_core.main_grid.set(START_ROW, 1 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
         label: 'WEIGHT',
         mouse: true,
@@ -40,7 +42,7 @@ function render() {
         valign: 'middle',
     });
 
-    /** @type {blessed.Widgets.BoxElement} */
+    /** @type {blessed.Widgets.ButtonElement} */
     const pres_kpi_comp = ui_core.main_grid.set(START_ROW, 2 * KPI_WIDTH, KPI_HEIGHT, KPI_WIDTH, blessed.button, {
         label: 'PRESSURE',
         mouse: true,
@@ -118,7 +120,7 @@ function render() {
     }
 
     // event handlers
-    temp_kpi_comp.on('press', () => {
+    function activate_temp_kpi() {
         temp_kpi_comp.style.bg = 'red';
         temp_kpi_comp.style.fg = 'white';
 
@@ -127,9 +129,11 @@ function render() {
         weight_kpi_comp.style.bg = '';
         weight_kpi_comp.style.fg = 'green';
         ui_core.trigger_ui_event('change_plot_param', { msg_type: MsgTypes.READ_TEMPERATURE });
-    });
+    }
+    temp_kpi_comp.on('press', activate_temp_kpi);
+    ui_core.add_ui_event('select_TEMP_kpi', 'activate_temp_kpi', activate_temp_kpi);
 
-    weight_kpi_comp.on('press', () => {
+    function activate_weight_kpi() {
         weight_kpi_comp.style.bg = 'green';
         weight_kpi_comp.style.fg = 'white';
 
@@ -138,9 +142,11 @@ function render() {
         pres_kpi_comp.style.bg = '';
         pres_kpi_comp.style.fg = 'blue';
         ui_core.trigger_ui_event('change_plot_param', { msg_type: MsgTypes.READ_WEIGHT });
-    });
+    }
+    weight_kpi_comp.on('press', activate_weight_kpi);
+    ui_core.add_ui_event('select_WGHT_kpi', 'activate_weight_kpi', activate_weight_kpi);
 
-    pres_kpi_comp.on('press', () => {
+    function activate_pres_kpi() {
         pres_kpi_comp.style.bg = 'blue';
         pres_kpi_comp.style.fg = 'white';
 
@@ -149,7 +155,9 @@ function render() {
         temp_kpi_comp.style.bg = '';
         temp_kpi_comp.style.fg = 'red';
         ui_core.trigger_ui_event('change_plot_param', { msg_type: MsgTypes.READ_PRESSURE });
-    });
+    }
+    pres_kpi_comp.on('press', activate_pres_kpi);
+    ui_core.add_ui_event('select_PRES_kpi', 'activate_pres_kpi', activate_pres_kpi);
 
     ui_core.add_ui_event('device_msg', 'device_msg_kpi_handler', args => {
         /** @type {import('../../lib/serial_driver').DeviceMsg} */
@@ -162,6 +170,8 @@ function render() {
         // kpi_comp.setContent(`${device_msg.msg_value.toFixed(3)} ${kpi_unit}`);
         kpi_comp.setContent(`${data_view(device_msg.msg_value)} ${kpi_unit}`);
     });
+
+    activate_weight_kpi();
 }
 
 module.exports = { render };

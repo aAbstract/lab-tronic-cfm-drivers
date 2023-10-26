@@ -7,7 +7,6 @@ const MODULE_ID = 'lib.serial_adapter';
 const PROTOCOL_VERSION = 0x87;
 
 /** @type {string} */
-let sp_name = null;
 /** @type {SerialPort} */
 let sp = null;
 /** @type {import('./serial_driver').DeviceMsg[]} */
@@ -19,11 +18,10 @@ let seq_number = 0;
  * @param {number} args
  */
 function send_command(msg_type, args) {
-    const func_id = `${MODULE_ID}.send_command`;
     if (sp === null) {
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
-                module_id: func_id,
+                module_id: '',
                 level: 'ERROR',
                 msg: `Serial Port [${sp_name}] is not Connected`,
             },
@@ -35,7 +33,7 @@ function send_command(msg_type, args) {
     if (result.err) {
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
-                module_id: func_id,
+                module_id: '',
                 level: 'ERROR',
                 msg: JSON.stringify(result.err),
             },
@@ -46,7 +44,7 @@ function send_command(msg_type, args) {
     const device_cmd_packet = result.ok;
     ui_core.trigger_ui_event('add_sys_log', {
         log_msg: {
-            module_id: func_id,
+            module_id: '',
             level: 'INFO',
             msg: `Writing: ${device_cmd_packet}`,
         },
@@ -75,7 +73,7 @@ function on_serial_data_handler(data) {
         if (result.err) {
             ui_core.trigger_ui_event('add_sys_log', {
                 log_msg: {
-                    module_id: func_id,
+                    module_id: '',
                     level: 'ERROR',
                     msg: JSON.stringify(result.err),
                 },
@@ -103,13 +101,11 @@ function on_serial_data_handler(data) {
 /**
  * @param {string} sp_name
  * @param {number} baud_rate
- * @param {Function} on_packet
  */
-function init_serial_adapter(sp_name, baud_rate) {
-    const func_id = `${MODULE_ID}.init_serial_adapter`;
+function connect_to_serial_port(sp_name, baud_rate) {
     ui_core.trigger_ui_event('add_sys_log', {
         log_msg: {
-            module_id: func_id,
+            module_id: '',
             level: 'INFO',
             msg: `Connecting to Port: ${sp_name}, Baud Rate: ${baud_rate}`,
         },
@@ -120,13 +116,14 @@ function init_serial_adapter(sp_name, baud_rate) {
         baudRate: baud_rate,
         autoOpen: false,
     });
+
     sp.open(err => {
         if (!err)
             return;
 
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
-                module_id: func_id,
+                module_id: '',
                 level: 'ERROR',
                 msg: `Could not Connect to Device Serial Port, ${err.message}`,
             },
@@ -135,19 +132,71 @@ function init_serial_adapter(sp_name, baud_rate) {
     });
 
     sp.on('open', () => {
-        sp_name = sp_name;
         const parser = new DelimiterParser({ delimiter: Buffer.from([0x0D, 0x0A]), includeDelimiter: true });
         sp.pipe(parser);
         parser.on('data', on_serial_data_handler);
 
         ui_core.trigger_ui_event('add_sys_log', {
             log_msg: {
-                module_id: func_id,
+                module_id: '',
                 level: 'INFO',
                 msg: 'Connected to Device Serial Port',
             },
         });
         ui_core.trigger_ui_event('device_connected', {});
+    });
+}
+
+/**
+ * @param {number} baud_rate
+ * @param {Function} on_packet
+ */
+function init_serial_adapter(baud_rate) {
+    SerialPort.list().then(ports => {
+        const devices_ports = ports.filter(x => (x.path.includes('COM') || x.path.includes('ttyUSB') || x.path.includes('ttyACM')));
+
+        if (devices_ports.length === 0) {
+            ui_core.trigger_ui_event('add_sys_log', {
+                log_msg: {
+                    module_id: '',
+                    level: 'ERROR',
+                    msg: 'No Devices Detected',
+                },
+            });
+            ui_core.trigger_ui_event('device_disconnected', {});
+            return;
+        }
+
+        if (devices_ports.length === 1) {
+            connect_to_serial_port(devices_ports[0].path, baud_rate);
+            return;
+        }
+
+        ui_core.add_ui_event('serial_port_connect', 'serial_port_connect_func', args => connect_to_serial_port(args.port_name, baud_rate));
+
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'INFO',
+                msg: `Detected Multiple Ports: ${devices_ports.map(x => x.path).join(', ')}`,
+            },
+        });
+
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'INFO',
+                msg: 'Choose One by Typing CONNECT or CN <port_name>',
+            },
+        });
+    }).catch(err => {
+        ui_core.trigger_ui_event('add_sys_log', {
+            log_msg: {
+                module_id: '',
+                level: 'ERROR',
+                msg: `Can not Scan Devices, Error: ${err}`,
+            },
+        });
     });
 
     ui_core.add_ui_event('write_data', 'write_data_func', (args) => {

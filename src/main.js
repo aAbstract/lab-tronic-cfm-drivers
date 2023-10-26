@@ -5,6 +5,6 @@ const main_layout = require('./ui/main_layout');
 main_layout.init_main_layout();
 
 // init serial port
-const SP_NAME = '/dev/ttyACM0';
+// const SP_NAME = '/dev/ttyACM0';
 const BAUD_RATE = 115200;
-serial_adapter.init_serial_adapter(SP_NAME, BAUD_RATE);
+serial_adapter.init_serial_adapter(BAUD_RATE);
